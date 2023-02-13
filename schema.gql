@@ -1,0 +1,144 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""product"""
+type Product {
+  """Product Id"""
+  id: ID!
+
+  """Product name"""
+  name: String!
+}
+
+type ProductCategory {
+  """Product Category Id"""
+  id: Int!
+
+  """Product Category name"""
+  name: String!
+
+  """Products"""
+  products: [Product!]!
+}
+
+type User {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Organisation {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Auth {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Query {
+  product: Product!
+  productCategories: [ProductCategory!]!
+  productCategory(id: Int!): ProductCategory!
+  users: [User!]!
+  user(id: Int!): User!
+  organisations: [Organisation!]!
+  organisation(id: Int!): Organisation!
+  auth(id: Int!): Auth!
+}
+
+type Mutation {
+  Product(createProductInput: CreateProductInput!): Product!
+  createProductCategory(createProductCategoryInput: CreateProductCategoryInput!): ProductCategory!
+  updateProductCategory(updateProductCategoryInput: UpdateProductCategoryInput!): ProductCategory!
+  removeProductCategory(id: Int!): ProductCategory!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createOrganisation(createOrganisationInput: CreateOrganisationInput!): Organisation!
+  updateOrganisation(updateOrganisationInput: UpdateOrganisationInput!): Organisation!
+  removeOrganisation(id: Int!): Organisation!
+  createAuth(signup: CreateAuthInput!): Auth!
+  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
+  removeAuth(id: Int!): Auth!
+}
+
+input CreateProductInput {
+  """Product name"""
+  name: String!
+
+  """Product Description"""
+  description: String!
+  quantity: Int!
+
+  """Product Price Currency"""
+  currency: String! = "USD"
+
+  """Product Price"""
+  price: Float!
+
+  """Product published?"""
+  published: Boolean!
+
+  """Product Category Id"""
+  productCategoryId: Int!
+
+  """Product Category Id"""
+  organisationId: Int!
+  sku: String
+  shortDescription: String
+  manufacturer: String
+  countryOfManufacturing: String
+  color: String
+  images: [String!]
+  videos: [String!]
+}
+
+input CreateProductCategoryInput {
+  """Product Category name"""
+  name: String!
+}
+
+input UpdateProductCategoryInput {
+  name: String
+  id: Int!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateOrganisationInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateOrganisationInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateAuthInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateAuthInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}

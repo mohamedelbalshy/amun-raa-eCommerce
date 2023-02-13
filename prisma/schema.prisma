@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organisation {
+
+  id                     Int @id @default(autoincrement())
+  name String
+  ownerId Int
+  owner User @relation(fields: [ownerId], references: [id], name: "OrganisationOwner")
+  products Product[] @relation(name: "ProductsOrganisation")
+  userOrganisationRelation UsersOrganisationsRealtion[] @relation(name: "UsersOrganisationRelation")
+  productCategories ProductCategory[] @relation(name: "ProductCategoryOrganisations")
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+  deletedAt DateTime? 
+}
+
+model User {
+  id                     Int @id @default(autoincrement())
+
+  email String @unique
+  password String
+  firstName String?
+  lastName String?
+  phoneNumber String?
+  bio String?
+  gender String?
+  zipPostalCode String?
+  country String?
+  city String?
+  isActive Boolean? @default(true)
+  language String?
+  profileImage String?
+  dateOfBirth DateTime?
+  browserIpSignup String?
+  lastLogin DateTime?
+  createdOrganisation Organisation[] @relation(name: "OrganisationOwner")
+  userOrganisationRelation UsersOrganisationsRealtion[] @relation(name: "UsersOrganisationRelation")
+  createdAt              DateTime            @default(now())  
+  updatedAt              DateTime            @updatedAt
+  deletedAt DateTime? 
+
+}
+
+model UsersOrganisationsRealtion {
+  id                     Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id], name: "UsersOrganisationRelation")
+  organisationId Int
+  organisation Organisation @relation(fields: [organisationId], references: [id], name: "UsersOrganisationRelation")
+}
+
+model Product {
+  id                     Int @id @default(autoincrement())
+  name                   String
+  description            String
+  quantity               Int
+  currency               String @default("USD")
+  price                  Float
+  published              Boolean @default(true)
+  status                 ProductStatus @default(ACTIVE)
+
+  sku                    String?
+  shortDescription       String?
+  manufacturer           String?
+  countryOfManufacturing String?
+  color                  String?
+  images                 String[]
+  videos                 String[]
+  productCategoryId             Int
+  category               ProductCategory @relation(fields: [productCategoryId], references: [id], name: "ProductsCategory")
+  organisationId         Int
+  organisation           Organisation @relation(fields: [organisationId], references: [id], name: "ProductsOrganisation")
+
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+  deletedAt DateTime?
+}
+
+model ProductCategory {
+  id Int @id @default(autoincrement())
+  name String
+
+  organisationId Int
+  organisation Organisation @relation(fields: [organisationId], references: [id], name: "ProductCategoryOrganisations")
+  products Product[] @relation(name: "ProductsCategory")
+  createdAt              DateTime            @default(now())  
+  updatedAt              DateTime            @updatedAt
+  deletedAt DateTime?
+}
+
+enum ProductStatus {
+  ACTIVE
+  DISCOUNTED
+  PAUSED
+}
